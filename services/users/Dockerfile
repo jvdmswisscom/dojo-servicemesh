@@ -3,8 +3,14 @@ FROM python:3.6.5-slim
 
 # install netcat
 RUN apt-get update && \
-    apt-get -y install netcat && \
+    apt-get -y install netcat wget unzip iproute && \
     apt-get clean
+
+# install consul
+RUN wget https://releases.hashicorp.com/consul/1.4.4/consul_1.4.4_linux_amd64.zip -O /tmp/consul.zip
+RUN unzip /tmp/consul.zip -d /usr/local/bin
+RUN mkdir /var/consul
+RUN mkdir /etc/consul.d
 
 # set working directory
 WORKDIR /usr/src/app
