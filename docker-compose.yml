@@ -8,6 +8,7 @@ services:
     environment:
       CONSUL_BIND_INTERFACE: eth0
       CONSUL_UI_BETA: "true"
+      CONSUL_LOCAL_CONFIG: '{"connect": {"enabled": true}}'
     ports:
       - 8500:8500
       - 8600:8600
@@ -94,10 +95,11 @@ services:
     environment:
       - FLASK_ENV=development
       - APP_SETTINGS=project.config.DevelopmentConfig
-      - USERS_SERVICE_URL=http://users:5000
+      - USERS_SERVICE_URL=http://localhost:5001 # consul connect sidecar proxy
       - SECRET_KEY=my_precious
       - DATABASE_URL=postgres://postgres:postgres@exercises-db:5432/exercises_dev
       - DATABASE_TEST_URL=postgres://postgres:postgres@exercises-db:5432/exercises_test
+      - CONSUL_SERVICE=exercises
     depends_on:
       - users
       - exercises-db
