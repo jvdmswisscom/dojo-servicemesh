@@ -15,6 +15,8 @@ class BaseConfig:
     BCRYPT_LOG_ROUNDS = 13
     TOKEN_EXPIRATION_DAYS = 30
     TOKEN_EXPIRATION_SECONDS = 0
+    ZIPKIN_DISABLE = False
+    ZIPKIN_DSN = 'http://zipkin:9411/api/v1/spans'
 
 
 class DevelopmentConfig(BaseConfig):

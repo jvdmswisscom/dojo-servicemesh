@@ -8,18 +8,20 @@ from flask_cors import CORS
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_zipkin import Zipkin
 
 
 # instantiate the extensions
 db = SQLAlchemy()
 migrate = Migrate()
 toolbar = DebugToolbarExtension()
+zipkin = Zipkin(sample_rate=10)
 
 
 def create_app(script_info=None):
 
-    # instantiate the app
-    app = Flask(__name__)
+    # instantiate the app, and name it for zipkin tracing
+    app = Flask(os.getenv('CONSUL_SERVICE'))
 
     # enable CORS
     CORS(app)
@@ -32,6 +34,7 @@ def create_app(script_info=None):
     toolbar.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
+    zipkin.init_app(app)
 
     # register blueprints
     from project.api.base import base_blueprint

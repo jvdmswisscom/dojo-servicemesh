@@ -74,9 +74,9 @@ elif [[ "${type}" == "client" ]]; then
 elif [[ "${type}" == "e2e" ]]; then
   echo "\n"
   echo "Running e2e tests!\n"
-  dup
+  #dup
   e2e
-  ddown
+  #ddown
 elif [[ "${type}" == "all" ]]; then
   echo "\n"
   echo "Running all tests!\n"

@@ -12,6 +12,8 @@ class BaseConfig:
     DEBUG_TB_INTERCEPT_REDIRECTS = False
     SECRET_KEY = os.environ.get('SECRET_KEY')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    ZIPKIN_DISABLE = False
+    ZIPKIN_DSN = 'http://zipkin:9411/api/v1/spans'
 
 
 class DevelopmentConfig(BaseConfig):

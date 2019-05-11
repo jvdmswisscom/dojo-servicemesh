@@ -13,6 +13,45 @@ services:
       - 8500:8500
       - 8600:8600
 
+  elasticsearch:
+    image: openzipkin/zipkin-elasticsearch6
+    container_name: elasticsearch
+    # Uncomment to expose the storage port for testing
+    # ports:
+    #   - 9200:9200
+
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    environment:
+      - STORAGE_TYPE=elasticsearch
+      # Point the zipkin at the storage backend
+      - ES_HOSTS=elasticsearch
+      # Uncomment to see requests to and from elasticsearch
+      # - ES_HTTP_LOGGING=BODY
+      - SCRIBE_ENABLED=true
+      # Uncomment to enable self-tracing
+      - SELF_TRACING_ENABLED=true
+    ports:
+      - 9411:9411
+      - 9410:9410
+    depends_on:
+      - elasticsearch
+
+  zipkin-dependencies:
+    image: openzipkin/zipkin-dependencies
+    container_name: zipkin-dependencies
+    entrypoint: crond -f
+    environment:
+      - STORAGE_TYPE=elasticsearch
+      - ES_HOSTS=elasticsearch
+      # Uncomment to see dependency processing logs
+      # - ZIPKIN_LOG_LEVEL=DEBUG
+      # Uncomment to adjust memory used by the dependencies job
+      # - JAVA_OPTS=-verbose:gc -Xms1G -Xmx1G
+    depends_on:
+      - elasticsearch
+
   users:
     build:
       context: ./services/users

@@ -3,7 +3,7 @@ FROM python:3.6.5-slim
 
 # install netcat
 RUN apt-get update && \
-    apt-get -y install netcat wget unzip iproute && \
+    apt-get -y install netcat wget unzip iproute build-essential && \
     apt-get clean
 
 # install consul
