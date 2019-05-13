@@ -130,7 +130,7 @@ services:
     volumes:
       - './services/exercises:/usr/src/app'
     ports:
-      - 5002:5000
+      - 5000
     environment:
       - FLASK_ENV=development
       - APP_SETTINGS=project.config.DevelopmentConfig
@@ -160,7 +160,7 @@ services:
     volumes:
       - './services/scores:/usr/src/app'
     ports:
-      - 5003:5000
+      - 5000
     environment:
       - FLASK_ENV=development
       - APP_SETTINGS=project.config.DevelopmentConfig
